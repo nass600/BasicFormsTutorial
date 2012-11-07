@@ -60,4 +60,33 @@ class ProjectController extends Controller
             'form'  => $form->createView()
         );
     }
+
+
+    /**
+     * @Route("/edit/{id}", name="admin_project_edit")
+     * @Template("IvelazquezAdminBundle:Project:edit.html.twig")
+     */
+    public function editAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $project = $em->getRepository('IvelazquezAdminBundle:Project')->findOneById($id);
+
+        if (null === $project) {
+            throw new \InvalidArgumentException("The project with id: $id does not exists in the datatbase");
+        }
+
+        $form = $this->createForm(new ProjectFormType(), $project);
+
+        if ($request->getMethod() == "POST") {
+            $formHandler = new ProjectFormHandler($form, $request, $em);
+
+            if ($formHandler->process()) {
+                return $this->redirect($this->generateUrl('admin_project_list'));
+            }
+        }
+
+        return array(
+            'form'  => $form->createView()
+        );
+    }
 }

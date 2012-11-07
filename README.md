@@ -133,7 +133,7 @@ going to create a new project feature, a basic form.
 
 1.  Create a new file in `src/Ivelazquez/AdminBundle/Form/Type/ProjectFormType.php`. This file will contain the form
     structure.
-2.  Add a new action to `ProjectController.php` called newAction where the form will be created and sent to the view
+2.  Add a new action to `ProjectController.php` called **newAction** where the form will be created and sent to the view
     to be rendered. This new action has the route `/new`
 3.  Create a new template for this form in `src/Ivelazquez/AdminBundle/Resources/views/Project/new.html.twig` and add:
 
@@ -162,6 +162,27 @@ it and persists the new entity
     And a function **process** were we have to:
     -   Bind the request to the form
     -   Check if it is valid: if valid, then persist and flush the new entity and return true; otherwise, return false.
+
 4.  Back to the Controller, we create this new class and pass in the needed parameters. Then we process the form and
     checks the return value of the handler processing. If true, everything is ok and our entity has been persisted so
     we redirect the response to the Project's listing. If false we will return the form again with the errors.
+5.  Finally, provide feedback to the user about the form processing failure or success via flashes.
+
+### 2. Edit form
+
+**Starting branch**: *1-basic-form*
+
+Move to this branch to continue with this feature:
+
+``` bash
+    git checkout -b 1-basic-form origin/1-basic-form
+```
+
+Now we would like to update information on a particular project.
+
+1.  Create an **editAction** in our `ProjectController.php`.
+2.  This action is almost identical to our first newAction so it creates a form and processes it if received a POST
+    request. But, before create the form, we need to look up the database for the project we want to update.
+3.  If we find this project, we need to prepopulate the form type when it is created with the found project's data.
+4.  After finishing the controller we are going to modify the `list.html.twig` template by adding a link on each
+    project's row that allows us to reach the edition form of each project.

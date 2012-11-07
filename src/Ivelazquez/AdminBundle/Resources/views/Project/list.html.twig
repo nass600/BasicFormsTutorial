@@ -12,6 +12,7 @@
                 <tr>
                     <td>Title</td>
                     <td>Url</td>
+                    <td>Actions</td>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,9 @@
                     <tr>
                         <td>{{ project.title }}</td>
                         <td>{{ project.url }}</td>
+                        <td>
+                            <a href="{{ path('admin_project_edit', {'id': project.id}) }}">Edit</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
