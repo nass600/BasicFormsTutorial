@@ -1,0 +1,16 @@
+{% extends "IvelazquezAdminBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="hero-unit">
+        <h1>New Project</h1>
+
+        <p>Create a new project.</p>
+    </div>
+
+    <form class="form-horizontal"
+          action="{{ path('admin_project_edit', {'id': form.id.get('value')}) }}"
+          method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" class="btn" value="Update">
+    </form>
+{% endblock %}

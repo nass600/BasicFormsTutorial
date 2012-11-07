@@ -166,7 +166,8 @@ it and persists the new entity
 4.  Back to the Controller, we create this new class and pass in the needed parameters. Then we process the form and
     checks the return value of the handler processing. If true, everything is ok and our entity has been persisted so
     we redirect the response to the Project's listing. If false we will return the form again with the errors.
-5.  Finally, provide feedback to the user about the form processing failure or success via flashes.
+5.  Finally, provide feedback to the user about the form processing failure or success via flashes. Write these flashes
+    on a different twig template and include it in the form listing
 
 ### 2. Edit form
 
@@ -180,9 +181,11 @@ Move to this branch to continue with this feature:
 
 Now we would like to update information on a particular project.
 
-1.  Create an **editAction** in our `ProjectController.php`.
+1.  Create an **editAction** in our `ProjectController.php`. The route is `/edit/{id}`.
 2.  This action is almost identical to our first newAction so it creates a form and processes it if received a POST
     request. But, before create the form, we need to look up the database for the project we want to update.
 3.  If we find this project, we need to prepopulate the form type when it is created with the found project's data.
 4.  After finishing the controller we are going to modify the `list.html.twig` template by adding a link on each
     project's row that allows us to reach the edition form of each project.
+5.  And, of course, create this new template `edit.html.twig`. This template is identical to `new.html.twig` unless the
+    form action must point to the edit project route instead of new project route.

@@ -92,8 +92,19 @@ class ProjectController extends Controller
             $formHandler = new ProjectFormHandler($form, $request, $em);
 
             if ($formHandler->process()) {
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    "The project <b>{$project->getTitle()}</b> has been updated"
+                );
+
                 return $this->redirect($this->generateUrl('admin_project_list'));
             }
+
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                "Something went wrong while processing the form"
+            );
         }
 
         return array(
