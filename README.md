@@ -14,35 +14,35 @@ But, first of all, here are the steps to install the project:
 
 ## Installation
 
-1. First download the repository code to your local:
+1.  First download the repository code to your local:
 
-``` bash
-    cd /path/to/workspace
-    git clone git@github.com:nass600/BasicFormsTutorial.git
-```
+    ``` bash
+        cd /path/to/workspace
+        git clone git@github.com:nass600/BasicFormsTutorial.git
+    ```
 
-2. Create the vhost file in `/etc/apache2/sites-available` directory. We will name it `basic-forms-tutorial`:
+2.  Create the vhost file in `/etc/apache2/sites-available` directory. We will name it `basic-forms-tutorial`:
 
-``` xml
-    <VirtualHost *:80>
-        DocumentRoot "/path/to/workspace/basic-forms-tutorial/web"
-        ServerName basic-forms-tutorial.localhost
-        DirectoryIndex app.php
+    ``` xml
+        <VirtualHost *:80>
+            DocumentRoot "/path/to/workspace/basic-forms-tutorial/web"
+            ServerName basic-forms-tutorial.localhost
+            DirectoryIndex app.php
 
-        <Directory "/path/to/workspace/basic-forms-tutorial/web">
-            Options Indexes FollowSymLinks Includes ExecCGI
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-        </Directory>
-    </VirtualHost>
-```
+            <Directory "/path/to/workspace/basic-forms-tutorial/web">
+                Options Indexes FollowSymLinks Includes ExecCGI
+                AllowOverride All
+                Order allow,deny
+                Allow from all
+            </Directory>
+        </VirtualHost>
+    ```
 
 3. Enable the new site in Apache:
 
-``` bash
-    sudo a2ensite basic-forms-tutorial
-```
+    ``` bash
+        sudo a2ensite basic-forms-tutorial
+    ```
 
 4. Add the ServerName to /etc/hosts file to be accesible via browser:
 
@@ -50,25 +50,31 @@ But, first of all, here are the steps to install the project:
 
 5. Restart Apache:
 
-``` bash
-    sudo service apache2 restart
-```
+    ``` bash
+        sudo service apache2 restart
+    ```
 
-5. Run composer to install symfony in your project:
+6. Set up the parameters.yml. Copy this sample file and set your database's parameters inside the new file:
 
-``` bash
-    cd /path/to/workspace/basic-forms-tutorial
-    composer install
-```
+    ``` bash
+        cp app/config/parameters.yml.sample app/config/parameters.yml
+    ```
 
-6. Give permissions to your user and Apache to clean the cache and logs directories:
+7. Run composer to install symfony in your project:
 
-``` bash
-    sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-    sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
-```
+    ``` bash
+        cd /path/to/workspace/basic-forms-tutorial
+        composer install
+    ```
 
-7. Now you should be able to see the welcome page of Symfony2 in the browser on this direction:
+8. Give permissions to your user and Apache to clean the cache and logs directories:
+
+    ``` bash
+        sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+        sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+    ```
+
+9. Now you should be able to see the welcome page of Symfony2 in the browser on this direction:
 
     http://basic-forms-tutorial.localhost/app_dev.php
 
