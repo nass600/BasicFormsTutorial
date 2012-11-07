@@ -14,6 +14,25 @@ class ProjectController extends Controller
      */
     public function listAction()
     {
-        return array();
+        $projects = $this->getDoctrine()->getEntityManager()->getRepository('IvelazquezAdminBundle:Project')->findAll();
+
+        return array(
+            'projects' => $projects
+        );
+    }
+
+    /**
+     * @Route("/show/{id}", name="admin_project_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $project = $this->getDoctrine()->getEntityManager()->getRepository(
+            'IvelazquezAdminBundle:Project'
+        )->findOneById($id);
+
+        return array(
+            'project' => $project
+        );
     }
 }

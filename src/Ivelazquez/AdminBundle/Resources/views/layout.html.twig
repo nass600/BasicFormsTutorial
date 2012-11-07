@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="UTF-8"/>
         <title>{% block title %}Basic Symfony Forms Tutorial{% endblock %}</title>
-        <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('bundles/ivelazquezadmin/css/bootstrap.min.css') }}" />
+        <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/ivelazquezadmin/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/ivelazquezadmin/css/bootstrap-responsive.css') }}"/>
+        <script type="text/javascript" src="{{ asset('bundles/ivelazquezadmin/js/jquery-1.8.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/ivelazquezadmin/js/bootstrap.min.js') }}"></script>
+
     </head>
     <body>
-        <div class="content">
-            {% block content %}
-            {% endblock %}
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="#">Basic Symfony Forms</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="{{ path('admin_project_list') }}">Projects</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="well sidebar-nav">
+                        <ul class="nav nav-list">
+                            <li class="nav-header">Actions</li>
+                            <li class="active">
+                                <a href="{{ path('admin_project_list') }}">Projects' list</a>
+                            </li>
+                            <li>
+                                <a href="">Create a new project</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="span9">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>2012 Ignacio Velazquez</p>
+            </footer>
         </div>
     </body>
 </html>

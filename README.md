@@ -92,7 +92,24 @@ Before start coding go to the first branch:
     git branch -b 0-start origin/0-start
 ```
 
+On this branch we have:
+
+* Removed the default AcmeDemoBundle
+* Prepared routing
+* Added bootstrap.css for templating styles
+* Created the basic entity Project
+* Created a list projects action on the Controller
+
 # 1. Basic form
 
-Let's create an Entity called Project and the three fields described above
+Before starting with forms we need to create the database and its tables physically so execute this on a terminal:
+
+``` bash
+    app/console doctrine:database:create
+    app/console doctrine:schema:update --force
+```
+
+If you go to our project's url: http://basic-forms-tutorial.localhost/app_dev.php you'll find out that there is just
+a bootsrap set up and no projects stored. Beacuse we do not have fixtures and we do not intend to crete them we are
+going to create a new project feature
 
