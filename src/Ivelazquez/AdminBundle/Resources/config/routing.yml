@@ -1,0 +1,5 @@
+######### AdminBundle
+
+project:
+  resource: "@IvelazquezAdminBundle/Controller/ProjectController.php"
+  type:   annotation

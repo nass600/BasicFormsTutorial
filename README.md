@@ -72,3 +72,27 @@ But, first of all, here are the steps to install the project:
 
     http://basic-forms-tutorial.localhost/app_dev.php
 
+
+## Tutorial
+
+Now, we start with the tutorial. The application consists on a Developer's portfolio backoffice.
+
+Imagine you want to create a portfolio including all the projects you have been involved in. At first glance, if you
+have done one or two projects you could be thinking on just write HTML to describe these two projects, but if you will
+continue developing sites, the creation of a backoffice where you can add easily new projects would be a good idea.
+
+Said that, we can model our backoffice with an Entity Project where we can set:
+* Project's title
+* Site's url
+* Description
+
+Before start coding go to the first branch:
+
+``` bash
+    git branch -b 0-start origin/0-start
+```
+
+# 1. Basic form
+
+Let's create an Entity called Project and the three fields described above
+
