@@ -46,7 +46,9 @@ But, first of all, here are the steps to install the project:
 
 4. Add the ServerName to /etc/hosts file to be accesible via browser:
 
-    127.0.0.1	basic-forms-tutorial.localhost
+    ```
+        127.0.0.1	basic-forms-tutorial.localhost
+    ```
 
 5. Restart Apache:
 
@@ -108,6 +110,8 @@ On this branch we have:
 
 # 1. Basic form
 
+*Starting branch: 0-start*
+
 Before starting with forms we need to create the database and its tables physically so execute this on a terminal:
 
 ``` bash
@@ -115,7 +119,7 @@ Before starting with forms we need to create the database and its tables physica
     app/console doctrine:schema:update --force
 ```
 
-If you go to our project's url: http://basic-forms-tutorial.localhost/app_dev.php you'll find out that there is just
-a bootsrap set up and no projects stored. Beacuse we do not have fixtures and we do not intend to crete them we are
-going to create a new project feature
+If you go to our project's url: http://basic-forms-tutorial.localhost/app_dev.php you'll find out that there is no
+projects stored yet. Beacuse we do not have fixtures and we do not intend to crete them we are
+going to create a new project feature, a basic form.
 
