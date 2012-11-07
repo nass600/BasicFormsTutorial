@@ -251,7 +251,23 @@ We are going to add to the Entity the following fields:
 3.  For the status field, we need a radio widget so create an expanded choice widget. The possible choices are:
     finished, maintenance and developing
 
-**Spliting up form rendering**
+**Spliting up the form rendering**
 
+Now we are going to render the form by fields to give more flexibility to our frontend developer. In the next part of
+the tutorial (validation) this would be useful to customize the validation error messages.
 
+1.  Remove this sentence from `form.html.twig`:
 
+    ``` jinja
+        {{ form_widget(form) }}
+    ```
+
+2.  Start creating the HTML you want and add each field via:
+
+    ``` jinja
+        {{ form_label(form.task) }}
+        {{ form_errors(form.task) }}
+        {{ form_widget(form.task) }}
+    ```
+
+    This allows you to use the elements you need of each field.
