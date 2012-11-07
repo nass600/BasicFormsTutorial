@@ -3,6 +3,9 @@
 namespace Ivelazquez\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Ivelazquez\AdminBundle\Form\Handler\ProjectFormHandler;
+use Symfony\Component\HttpFoundation\Request;
+use Ivelazquez\AdminBundle\Form\Type\ProjectFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -10,7 +13,7 @@ class ProjectController extends Controller
 {
     /**
      * @Route("/", name="admin_project_list")
-     * @Template()
+     * @Template("IvelazquezAdminBundle:Project:list.html.twig")
      */
     public function listAction()
     {
@@ -23,7 +26,7 @@ class ProjectController extends Controller
 
     /**
      * @Route("/show/{id}", name="admin_project_show")
-     * @Template()
+     * @Template("IvelazquezAdminBundle:Project:show.html.twig")
      */
     public function showAction($id)
     {
@@ -33,6 +36,28 @@ class ProjectController extends Controller
 
         return array(
             'project' => $project
+        );
+    }
+
+
+    /**
+     * @Route("/new", name="admin_project_new")
+     * @Template("IvelazquezAdminBundle:Project:new.html.twig")
+     */
+    public function newAction(Request $request)
+    {
+        $form = $this->createForm(new ProjectFormType());
+
+        if ($request->getMethod() == "POST") {
+            $formHandler = new ProjectFormHandler($form, $request, $this->getDoctrine()->getEntityManager());
+
+            if ($formHandler->process()) {
+                return $this->redirect($this->generateUrl('admin_project_list'));
+            }
+        }
+
+        return array(
+            'form'  => $form->createView()
         );
     }
 }

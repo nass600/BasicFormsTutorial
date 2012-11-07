@@ -108,9 +108,15 @@ On this branch we have:
 * Created the basic entity Project
 * Created a list projects action on the Controller
 
-# 1. Basic form
+### 1. Basic form
 
-*Starting branch: 0-start*
+**Starting branch**: *0-start*
+
+Move to the initial branch to start with this feature:
+
+``` bash
+    git checkout -b 0-start origin/0-start
+```
 
 Before starting with forms we need to create the database and its tables physically so execute this on a terminal:
 
@@ -120,6 +126,42 @@ Before starting with forms we need to create the database and its tables physica
 ```
 
 If you go to our project's url: http://basic-forms-tutorial.localhost/app_dev.php you'll find out that there is no
-projects stored yet. Beacuse we do not have fixtures and we do not intend to crete them we are
+projects stored yet. We do not have fixtures and we do not intend to create them so we are
 going to create a new project feature, a basic form.
 
+**Form rendering**
+
+1.  Create a new file in `src/Ivelazquez/AdminBundle/Form/Type/ProjectFormType.php`. This file will contain the form
+    structure.
+2.  Add a new action to `ProjectController.php` called newAction where the form will be created and sent to the view
+    to be rendered. This new action has the route `/new`
+3.  Create a new template for this form in `src/Ivelazquez/AdminBundle/Resources/views/Project/new.html.twig` and add:
+
+    ``` jinja
+        <form action="{{ path('admin_project_new') }}" method="post" {{ form_enctype(form) }}>
+            {{ form_widget(form) }}
+            <input type="submit" class="btn" value="Create">
+        </form>
+    ```
+4.  Add to the layout's sidemenu a link to our new action
+5.  After that you will be able to see the form by clicking on the link created above.
+
+**Form processing**
+
+We have draw a form but right now it is not processing any data. The processing consists on binding the date, validate
+it and persists the new entity
+
+1.  Extend the newAction. Insert inside this function an if sentence for processing POST requests.
+2.  Inside this sentence we are going to delegate all the form processing to a new class called ProjectFormHandler
+    created in `/src/Ivelazquez/AdminBundle/Form/Handler/ProjectFormHandler.php`. Let's create it.
+3.  Such class will be made up of a **constructor** receiving:
+    -   The created form
+    -   The received request
+    -   The EntityManager
+
+    And a function **process** were we have to:
+    -   Bind the request to the form
+    -   Check if it is valid: if valid, then persist and flush the new entity and return true; otherwise, return false.
+4.  Back to the Controller, we create this new class and pass in the needed parameters. Then we process the form and
+    checks the return value of the handler processing. If true, everything is ok and our entity has been persisted so
+    we redirect the response to the Project's listing. If false we will return the form again with the errors.
