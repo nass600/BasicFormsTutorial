@@ -188,4 +188,21 @@ Now we would like to update information on a particular project.
 4.  After finishing the controller we are going to modify the `list.html.twig` template by adding a link on each
     project's row that allows us to reach the edition form of each project.
 5.  And, of course, create this new template `edit.html.twig`. This template is identical to `new.html.twig` unless the
-    form action must point to the edit project route instead of new project route.
+    form action must point to the edit project route instead of new project route. Thus we also need to send the
+    project's id we are updating to the view
+
+**Refactor form templates**
+
+As you can see, `new.html.twig` and `edit.html.twig` only differ in the form's action, an extra id passed in when
+updating and the submit button's value text. In next steps we are going to theme the form so it would be great that
+both actions render the same form code.
+
+1.  Let's create another template named `form.html.twig` where we are going to copy the form's content.Right now,
+    it means only this:
+
+    ``` jinja
+        {{ form_widget(form) }}
+    ```
+
+    Now it is just a line of code but, it is going to grow up when customizing the form.
+2.  Now, include this new `form.html.twig` in both templates

@@ -7,7 +7,9 @@
     </div>
 
     <form class="form-horizontal" action="{{ path('admin_project_new') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+
+        {% include "IvelazquezAdminBundle:Project:form.html.twig" %}
+
         <input type="submit" class="btn" value="Create">
     </form>
 {% endblock %}

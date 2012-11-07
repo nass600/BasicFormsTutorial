@@ -2,15 +2,17 @@
 
 {% block content %}
     <div class="hero-unit">
-        <h1>New Project</h1>
+        <h1>Edit Project</h1>
 
-        <p>Create a new project.</p>
+        <p>Modify <strong>{{ form.title.get('value') }}</strong> information.</p>
     </div>
 
     <form class="form-horizontal"
           action="{{ path('admin_project_edit', {'id': projectId}) }}"
           method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+
+        {% include "IvelazquezAdminBundle:Project:form.html.twig" %}
+
         <input type="submit" class="btn" value="Update">
     </form>
 {% endblock %}
