@@ -53,18 +53,13 @@ class ProjectController extends Controller
 
             if ($formHandler->process()) {
 
-                $this->get('session')->getFlashBag()->add(
+                $this->get('session')->getFlashBag()->set(
                     'notice',
                     "The project <b>{$form->getData()->getTitle()}</b> has been created"
                 );
 
                 return $this->redirect($this->generateUrl('admin_project_list'));
             }
-
-            $this->get('session')->getFlashBag()->add(
-                'error',
-                "Something went wrong while processing the form"
-            );
         }
 
         return array(
@@ -93,18 +88,13 @@ class ProjectController extends Controller
 
             if ($formHandler->process()) {
 
-                $this->get('session')->getFlashBag()->add(
+                $this->get('session')->getFlashBag()->set(
                     'notice',
                     "The project <b>{$project->getTitle()}</b> has been updated"
                 );
 
                 return $this->redirect($this->generateUrl('admin_project_list'));
             }
-
-            $this->get('session')->getFlashBag()->add(
-                'error',
-                "Something went wrong while processing the form"
-            );
         }
 
         return array(

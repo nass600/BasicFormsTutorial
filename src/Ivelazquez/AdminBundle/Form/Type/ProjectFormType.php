@@ -15,8 +15,21 @@ class ProjectFormType extends AbstractType
             ->add('url')
             ->add('description')
             ->add('finishDate', 'date', array(
-                'widget' => 'single_text',
-                'format' => 'dd/M/yyyy'
+                'widget'   => 'single_text',
+                'format'   => 'dd/M/yyyy',
+                'required' => false
+            ))
+            ->add('country', 'country', array(
+                'empty_value' => '--Select a country--',
+                'required'    => false
+            ))
+            ->add('status', 'choice', array(
+                'expanded' => true,
+                'choices'  => array(
+                    'finished'    => 'finished',
+                    'maintenance' => 'maintenance',
+                    'developing'  => 'developing'
+                )
             ));
     }
 

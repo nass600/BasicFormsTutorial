@@ -90,9 +90,9 @@ have done one or two projects you could be thinking on just write HTML to descri
 continue developing sites, the creation of a backoffice where you can add easily new projects would be a good idea.
 
 Said that, we can model our backoffice with an Entity Project where we can set:
-* Project's title
-* Site's url
-* Description
+* Project's title (type: string; nullable=false)
+* Site's url (type: string; nullable=true)
+* Description (type: string; nullable=true)
 
 Before start coding go to the first branch:
 
@@ -228,9 +228,9 @@ its form.
 
 We are going to add to the Entity the following fields:
 
-- finishDate (datetime)
-- country (string)
-- status (string)
+- finishDate (type: datetime; nullable=true)
+- country (type: string; nullable=true)
+- status (type: string; nullable=true)
 
 **Extending the Entity**
 
@@ -244,7 +244,14 @@ We are going to add to the Entity the following fields:
 
 1.  Add the finishDate field to the form type. If you set nothing on the form field it will render 5 selects according
     to the DateTime format. We do not take care about the time for this example and we rather prefer a unique text
-    input with a date format like dd/mm/yyyy (Tip: Use the date widget instead of datetime).
+    input with a date format like dd/M/yyyy (Tip: Use the date widget instead of datetime). It is not required.
 2.  Add the a select widget where we can choose any country. (Tip: Symfony comes with Country and Language widgets and
-    validation).
+    validation). So this field could be null, we are going to set an empty_value for display it in the select
+    widget as default.
+3.  For the status field, we need a radio widget so create an expanded choice widget. The possible choices are:
+    finished, maintenance and developing
+
+**Spliting up form rendering**
+
+
 
