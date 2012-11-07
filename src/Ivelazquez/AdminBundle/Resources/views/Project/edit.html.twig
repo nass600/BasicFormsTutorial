@@ -8,7 +8,7 @@
     </div>
 
     <form class="form-horizontal"
-          action="{{ path('admin_project_edit', {'id': form.id.get('value')}) }}"
+          action="{{ path('admin_project_edit', {'id': projectId}) }}"
           method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <input type="submit" class="btn" value="Update">

@@ -108,7 +108,8 @@ class ProjectController extends Controller
         }
 
         return array(
-            'form'  => $form->createView()
+            'form'  => $form->createView(),
+            'projectId' => $project->getId()
         );
     }
 }
