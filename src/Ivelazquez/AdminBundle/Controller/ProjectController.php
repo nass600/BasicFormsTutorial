@@ -52,12 +52,23 @@ class ProjectController extends Controller
             $formHandler = new ProjectFormHandler($form, $request, $this->getDoctrine()->getEntityManager());
 
             if ($formHandler->process()) {
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    "The project <b>{$form->getData()->getTitle()}</b> has been created"
+                );
+
                 return $this->redirect($this->generateUrl('admin_project_list'));
             }
+
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                "Something went wrong while processing the form"
+            );
         }
 
         return array(
-            'form'  => $form->createView()
+            'form' => $form->createView()
         );
     }
 }
