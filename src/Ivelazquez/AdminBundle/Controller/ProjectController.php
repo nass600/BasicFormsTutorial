@@ -53,7 +53,7 @@ class ProjectController extends Controller
 
             if ($formHandler->process()) {
 
-                $this->get('session')->getFlashBag()->add(
+                $this->get('session')->getFlashBag()->set(
                     'notice',
                     "The project <b>{$form->getData()->getTitle()}</b> has been created"
                 );
@@ -61,7 +61,7 @@ class ProjectController extends Controller
                 return $this->redirect($this->generateUrl('admin_project_list'));
             }
 
-            $this->get('session')->getFlashBag()->add(
+            $this->get('session')->getFlashBag()->set(
                 'error',
                 "Something went wrong while processing the form"
             );
