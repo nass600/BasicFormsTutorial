@@ -3,8 +3,11 @@
 {% block content %}
     <div class="hero-unit">
         <h1>Project's list</h1>
+
         <p>This is the list of projects you have already code.</p>
     </div>
+
+    {% include "IvelazquezAdminBundle::flash.html.twig" %}
 
     {% if projects|length > 0 %}
         <table class="table">
