@@ -108,6 +108,8 @@ On this branch we have:
 * Created the basic entity Project
 * Created a list projects action on the Controller
 
+
+
 ### 1. Basic form
 
 **Starting branch**: *0-start*
@@ -169,6 +171,8 @@ it and persists the new entity
 5.  Finally, provide feedback to the user about the form processing failure or success via flashes. Write these flashes
     on a different twig template and include it in the form listing
 
+
+
 ### 2. Edit form
 
 **Starting branch**: *1-basic-form*
@@ -197,7 +201,7 @@ As you can see, `new.html.twig` and `edit.html.twig` only differ in the form's a
 updating and the submit button's value text. In next steps we are going to theme the form so it would be great that
 both actions render the same form code.
 
-1.  Let's create another template named `form.html.twig` where we are going to copy the form's content.Right now,
+1.  Let's create another template named `form.html.twig` where we are going to copy the form's content. Right now,
     it means only this:
 
     ``` jinja
@@ -205,4 +209,42 @@ both actions render the same form code.
     ```
 
     Now it is just a line of code but, it is going to grow up when customizing the form.
-2.  Now, include this new `form.html.twig` in both templates
+2.  Now, include this new `form.html.twig` in both templates.
+
+
+
+### 3. New widgets
+
+**Starting branch**: *2-edit-form*
+
+Move to this branch to continue with this feature:
+
+``` bash
+    git checkout -b 2-edit-form origin/2-edit-form
+```
+
+At this point, we have a functional creation and edition form. It is time to extend our Project Entity and therefore,
+its form.
+
+We are going to add to the Entity the following fields:
+
+- finishDate (datetime)
+- country (string)
+- status (string)
+
+**Extending the Entity**
+
+1.  Create the new Entity's fields and respective getters and setters.
+2.  Refresh the database schema via:
+    ``` bash
+        app/console doctrine:schema:update --force
+    ```
+
+**Extending the form**
+
+1.  Add the finishDate field to the form type. If you set nothing on the form field it will render 5 selects according
+    to the DateTime format. We do not take care about the time for this example and we rather prefer a unique text
+    input with a date format like dd/mm/yyyy (Tip: Use the date widget instead of datetime).
+2.  Add the a select widget where we can choose any country. (Tip: Symfony comes with Country and Language widgets and
+    validation).
+

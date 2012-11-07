@@ -13,7 +13,11 @@ class ProjectFormType extends AbstractType
         $builder
             ->add('title')
             ->add('url')
-            ->add('description');
+            ->add('description')
+            ->add('finishDate', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'dd/M/yyyy'
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

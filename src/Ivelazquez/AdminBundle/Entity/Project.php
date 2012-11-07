@@ -37,6 +37,24 @@ class Project
     protected $description;
 
     /**
+   	 * @ORM\Column(name="finish_date", type="datetime", nullable=true)
+   	 * @var \DateTime
+   	 */
+    protected $finishDate;
+
+    /**
+   	 * @ORM\Column(name="status", type="string", length=32, nullable=true)
+   	 * @var string
+   	 */
+    protected $status;
+
+    /**
+   	 * @ORM\Column(name="country", type="string", length=2, nullable=true)
+   	 * @var string
+   	 */
+    protected $country;
+
+    /**
      * @return int
      */
     public function getId()
@@ -100,6 +118,66 @@ class Project
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFinishDate()
+    {
+        return $this->finishDate;
+    }
+
+    /**
+     * @param \DateTime $finishDate
+     *
+     * @return Project
+     */
+    public function setFinishDate($finishDate)
+    {
+        $this->finishDate = $finishDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return Project
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     *
+     * @return Project
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
 
         return $this;
     }
