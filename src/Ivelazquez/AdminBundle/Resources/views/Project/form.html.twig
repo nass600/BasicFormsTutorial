@@ -6,8 +6,32 @@
     </div>
 </div>
 <div class="control-group">
+    {{ form_label(form.url, 'Url', { 'label_attr': {'class': 'control-label'} }) }}
+    <div class="controls">
+        {{ form_widget(form.url) }}
+    </div>
+</div>
+<div class="control-group">
     {{ form_label(form.description, 'Description', { 'label_attr': {'class': 'control-label'} }) }}
     <div class="controls">
         {{ form_widget(form.description) }}
+    </div>
+</div>
+<div class="control-group">
+    {{ form_label(form.finishDate, 'Finish Date', { 'label_attr': {'class': 'control-label'} }) }}
+    <div class="controls">
+        {{ form_widget(form.finishDate) }}
+    </div>
+</div>
+<div class="control-group">
+    {{ form_label(form.status, 'Status', { 'label_attr': {'class': 'control-label'} }) }}
+    <div class="controls">
+        {{ form_widget(form.status) }}
+    </div>
+</div>
+<div class="control-group">
+    {{ form_label(form.country, 'Country', { 'label_attr': {'class': 'control-label'} }) }}
+    <div class="controls">
+        {{ form_widget(form.country) }}
     </div>
 </div>
