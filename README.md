@@ -254,7 +254,7 @@ We are going to add to the Entity the following fields:
 **Spliting up the form rendering**
 
 Now we are going to render the form by fields to give more flexibility to our frontend developer. In the next part of
-the tutorial (validation) this would be useful to customize the validation error messages.
+the tutorial (theming) this would be useful to customize the validation error messages.
 
 1.  Remove this sentence from `form.html.twig`:
 
