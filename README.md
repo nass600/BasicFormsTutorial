@@ -271,3 +271,110 @@ the tutorial (theming) this would be useful to customize the validation error me
     ```
 
     This allows you to use the elements you need of each field.
+
+
+
+### 4. Validation
+
+**Starting branch**: *3-new-widgets*
+
+Move to this branch to continue with this feature:
+
+``` bash
+    git checkout -b 3-new-widgets origin/3-new-widgets
+```
+
+Right now, this form validates according to the Symfony default Type Constraints but we want to enhance the security of
+our data input adding some more Constraints and security to this form.
+
+If you inspect your Entity we can add the following rules:
+
+* title (We need this value so it is required)
+* url (We need a well-formed url)
+* description (For instance, only 255 characters)
+* finishDate (A valid date. In addition we want the exact format described in the widget)
+* country (Valid country)
+
+Let's go to our Project Entity and add the convinient Asserts. You can find all Symfony Constraints under
+`vendor/symfony/symfony/src/Component/Validator/Constraints` and choose the one that fit your needs. In addition,
+change the default message if you want.
+
+Note: Remember to disable default HTML5 Validation to see our backend validation in action. You can do this via adding
+`novalidate` attribute to the `<form>` tag
+
+The date field needs special mention. In addition to a Date Constraint we need to set some variables in the
+ProjectFormType. Imagine you insert 22222222 as date, Symfony will try to create a DateTime with such string and the
+Type Validation will show you a different message than the one you set in your Date Constraint.
+
+To fix this we are going to set our custom message in the invalid_message parameter in the type in the finishDate
+field.
+
+
+
+### 5. Theming
+
+**Starting branch**: *4-validation*
+
+Move to this branch to continue with this feature:
+
+``` bash
+    git checkout -b 4-validation origin/4-validation
+```
+
+Let's pimp the form layout. As you can see we still have the default lists of errors when a field is not valid. We
+rather red alerts for example. So we are using Twitter Bootstrap we would like to get a tooltip when hovering
+a not valid input.
+
+For achieve this task we can override the default twig template for simple widgets:
+
+*   First of all, look for `form_div_layout.html.twig`. This template contains the HTML of any widget.
+*   Afterwards copy the widget we need and copy it to a new file `form-theme.html.twig` located at Resources/views/Form
+    directory. In this file we are going to code all template overrides.
+*   Insert at the top of the `form.html.twig` the next line:
+
+    ``` jinja
+        {% form_theme form "IvelazquezAdminBundle:Form:form-theme.html.twig" %}
+    ```
+
+*   Now is time to change the html structure of the widgets need. We want to change only the text widgets adding all
+    the redundant HTML we insert previously when splitting up the form in just one place. So move the div.controls
+    surrounding the widgets for title, url and finishDate to the form-theme template.
+*   Copy also from `form_div_layout.html.twig` the textarea widget for the description field.
+*   We have replaced the widget structures we need and now we have to adapt it to Bootsrap. We are going to fire the
+    tooltip when hover on an input or textarea containing the class `error` so let's remove the `form_errors` helper
+    on the form and add such check inside the widget itself. It consists on merge the class `error` to the already set
+    classes if errors exist. Add some style like red border to it.
+*   Last, bootstrap tooltips get the displaying message from an attribute called data-original-title so add the message
+    in this attribute for displaying the validation message.
+*   The final text widget will look like this:
+
+    ``` jinja
+    {% block form_widget_simple %}
+        {% spaceless %}
+            {% set type = type|default('text') %}
+            {% if errors|length > 0 %}
+                {% set attr = attr|merge({'class': (attr.class|default('') ~ ' error')|trim}) %}
+            {% endif %}
+            <div class="controls">
+                <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}
+                {% if errors|length > 0 %}
+                    rel="tooltip"
+                    data-original-title="
+                        {% for error in errors %}
+                            {{ error.messageTemplate|trans(error.messageParameters, 'validators') ~'<br>' }}
+                        {% endfor %}
+                    "
+                {% endif %}
+                />
+            </div>
+        {% endspaceless %}
+    {% endblock form_widget_simple %}
+    ```
+
+
+## Tutorial Finished
+
+Now you have all the basic skills about handling forms. We have learn to create forms and their widgets, validate and
+process the input data and modify the look and feel of them
+
+To check the whole code just go to the last branch: `git checkout -b 5-theming origin/5-theming`
