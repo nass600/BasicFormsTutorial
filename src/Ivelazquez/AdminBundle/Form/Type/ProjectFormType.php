@@ -16,7 +16,8 @@ class ProjectFormType extends AbstractType
             ->add('description')
             ->add('finishDate', 'date', array(
                 'widget'   => 'single_text',
-                'format'   => 'dd/M/yyyy',
+                'format'   => 'dd/MM/yyyy',
+                'invalid_message' => "This is not a valid date. Valid format: dd/MM/yyyy",
                 'required' => false
             ))
             ->add('country', 'country', array(

@@ -3,6 +3,7 @@
 namespace Ivelazquez\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -19,24 +20,28 @@ class Project
     protected $id;
 
     /**
+     * @Assert\NotBlank(message="The title is required")
    	 * @ORM\Column(name="title", type="string", length=126)
    	 * @var string
    	 */
     protected $title;
 
     /**
+     * @Assert\Url(message="This url is not valid")
    	 * @ORM\Column(name="url", type="string", length=255, nullable=true)
    	 * @var string
    	 */
     protected $url;
 
     /**
+     * @Assert\MaxLength(limit=255 ,message="The description must contain less than {{ limit }} characters")
    	 * @ORM\Column(name="description", type="text", nullable=true)
    	 * @var string
    	 */
     protected $description;
 
     /**
+     * @Assert\Date(message="This is not a valid date. Valid format: dd/MM/yyyy")
    	 * @ORM\Column(name="finish_date", type="datetime", nullable=true)
    	 * @var \DateTime
    	 */
@@ -49,6 +54,7 @@ class Project
     protected $status;
 
     /**
+     * @Assert\Country(message="This is not a valid country")
    	 * @ORM\Column(name="country", type="string", length=2, nullable=true)
    	 * @var string
    	 */

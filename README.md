@@ -271,3 +271,40 @@ the tutorial (theming) this would be useful to customize the validation error me
     ```
 
     This allows you to use the elements you need of each field.
+
+
+
+### 4. Validation
+
+**Starting branch**: *3-new-widgets*
+
+Move to this branch to continue with this feature:
+
+``` bash
+    git checkout -b 3-new-widgets origin/3-new-widgets
+```
+
+Right now, this form validates according to the Symfony default Type Constraints but we want to enhance the security of
+our data input adding some more Constraints and security to this form.
+
+If you inspect your Entity we can add the following rules:
+
+* title (We need this value so it is required)
+* url (We need a well-formed url)
+* description (For instance, only 255 characters)
+* finishDate (A valid date. In addition we want the exact format described in the widget)
+* country (Valid country)
+
+Let's go to our Project Entity and add the convinient Asserts. You can find all Symfony Constraints under
+`vendor/symfony/symfony/src/Component/Validator/Constraints` and choose the one that fit your needs. In addition,
+change the default message if you want.
+
+Note: Remember to disable default HTML5 Validation to see our backend validation in action. You can do this via adding
+`novalidate` attribute to the `<form>` tag
+
+The date field needs special mention. In addition to a Date Constraint we need to set some variables in the
+ProjectFormType. Imagine you insert 22222222 as date, Symfony will try to create a DateTime with such string and the
+Type Validation will show you a different message than the one you set in your Date Constraint.
+
+To fix this we are going to set our custom message in the invalid_message parameter in the type in the finishDate
+field.

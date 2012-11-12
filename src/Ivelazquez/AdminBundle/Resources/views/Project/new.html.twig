@@ -3,10 +3,14 @@
 {% block content %}
     <div class="hero-unit">
         <h1>New Project</h1>
+
         <p>Create a new project.</p>
     </div>
 
-    <form class="form-horizontal" action="{{ path('admin_project_new') }}" method="post" {{ form_enctype(form) }}>
+    <form class="form-horizontal"
+          action="{{ path('admin_project_new') }}"
+          method="post" {{ form_enctype(form) }}
+          novalidate>
 
         {% include "IvelazquezAdminBundle:Project:form.html.twig" %}
 
