@@ -1,0 +1,40 @@
+{% block form_widget_simple %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        {% if errors|length > 0 %}
+            {% set attr = attr|merge({'class': (attr.class|default('') ~ ' error')|trim}) %}
+        {% endif %}
+        <div class="controls">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}
+            {% if errors|length > 0 %}
+                rel="tooltip"
+                data-original-title="
+                    {% for error in errors %}
+                        {{ error.messageTemplate|trans(error.messageParameters, 'validators') ~'<br>' }}
+                    {% endfor %}
+                "
+            {% endif %}
+            />
+        </div>
+    {% endspaceless %}
+{% endblock form_widget_simple %}
+
+{% block textarea_widget %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% set attr = attr|merge({'class': (attr.class|default('') ~ ' error')|trim}) %}
+        {% endif %}
+        <div class="controls">
+            <textarea {{ block('widget_attributes') }}
+            {% if errors|length > 0 %}
+                rel="tooltip"
+                data-original-title="
+                    {% for error in errors %}
+                        {{ error.messageTemplate|trans(error.messageParameters, 'validators') ~'<br>' }}
+                    {% endfor %}
+                "
+            {% endif %}
+            >{{ value }}</textarea>
+        </div>
+    {% endspaceless %}
+{% endblock textarea_widget %}

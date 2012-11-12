@@ -1,31 +1,20 @@
+{% form_theme form "IvelazquezAdminBundle:Form:form-theme.html.twig" %}
 
 <div class="control-group">
-    {{ form_errors(form.title) }}
     {{ form_label(form.title, 'Title', { 'label_attr': {'class': 'control-label'} }) }}
-    <div class="controls">
-        {{ form_widget(form.title) }}
-    </div>
+    {{ form_widget(form.title) }}
 </div>
 <div class="control-group">
-    {{ form_errors(form.url) }}
     {{ form_label(form.url, 'Url', { 'label_attr': {'class': 'control-label'} }) }}
-    <div class="controls">
-        {{ form_widget(form.url) }}
-    </div>
+    {{ form_widget(form.url) }}
 </div>
 <div class="control-group">
-    {{ form_errors(form.description) }}
     {{ form_label(form.description, 'Description', { 'label_attr': {'class': 'control-label'} }) }}
-    <div class="controls">
-        {{ form_widget(form.description) }}
-    </div>
+    {{ form_widget(form.description) }}
 </div>
 <div class="control-group">
-    {{ form_errors(form.finishDate) }}
     {{ form_label(form.finishDate, 'Finish Date', { 'label_attr': {'class': 'control-label'} }) }}
-    <div class="controls">
-        {{ form_widget(form.finishDate) }}
-    </div>
+    {{ form_widget(form.finishDate) }}
 </div>
 <div class="control-group">
     {{ form_errors(form.status) }}
@@ -41,3 +30,9 @@
         {{ form_widget(form.country) }}
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input.error, textarea.error').tooltip();
+    });
+</script>
