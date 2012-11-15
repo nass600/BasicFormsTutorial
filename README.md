@@ -5,7 +5,7 @@ Step-by-step tutorial for building basic forms in Symfony 2.1.x. The level requi
 
 This tutorial starts with a raw Symfony 2.1.3 project and a few Enitites created to be used during the guide.
 On each step we are going to extend our forms system adding a new feature to create a fully functional project with
-complex forms including collections, several widgets, data transformers, validation ...
+basic forms including a creation and edition form, validation, form theming ...
 
 Each feature will be included in a new branch and includes the former ones. So the branches will be named according to
 *step-feature*
@@ -18,7 +18,7 @@ But, first of all, here are the steps to install the project:
 
     ``` bash
         cd /path/to/workspace
-        git clone git@github.com:nass600/BasicFormsTutorial.git
+        git clone git@github.com:nass600/BasicFormsTutorial.git basic-forms-tutorial
     ```
 
 2.  Create the vhost file in `/etc/apache2/sites-available` directory. We will name it `basic-forms-tutorial`:
@@ -44,7 +44,7 @@ But, first of all, here are the steps to install the project:
         sudo a2ensite basic-forms-tutorial
     ```
 
-4. Add the ServerName to /etc/hosts file to be accesible via browser:
+4. Add the ServerName to `/etc/hosts` file to be accesible via browser:
 
     ```
         127.0.0.1	basic-forms-tutorial.localhost
@@ -56,38 +56,52 @@ But, first of all, here are the steps to install the project:
         sudo service apache2 restart
     ```
 
-6. Set up the parameters.yml. Copy this sample file and set your database's parameters inside the new file:
+6. Set up the parameters.yml. Copy the included sample file and set your database's parameters inside the new file:
 
     ``` bash
         cp app/config/parameters.yml.sample app/config/parameters.yml
     ```
 
-7. Run composer to install symfony in your project:
+7.  Download composer:
+
+    ``` bash
+        curl -s https://getcomposer.org/installer | php
+        sudo mv composer.phar /user/bin/composer
+    ```
+
+8. Run composer to install symfony in your project:
 
     ``` bash
         cd /path/to/workspace/basic-forms-tutorial
         composer install
     ```
 
-8. Give permissions to your user and Apache to clean the cache and logs directories:
+9. Give permissions to your user and the Apache user in order to clean the cache and logs directories:
 
     ``` bash
         sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
         sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
     ```
 
-9. Now you should be able to see the welcome page of Symfony2 in the browser on this direction:
+10. Clean the cache:
+
+    ``` bash
+        app/console cache:clear
+    ```
+
+11. Now you should be able to see the welcome page of Symfony2 in the browser on this direction:
 
     http://basic-forms-tutorial.localhost/app_dev.php
 
 
 ## Tutorial
 
-Now, we start with the tutorial. The application consists on a Developer's portfolio backoffice.
+Now, we start with the tutorial. The application consists on a Developer portfolio's backoffice.
 
 Imagine you want to create a portfolio including all the projects you have been involved in. At first glance, if you
-have done one or two projects you could be thinking on just write HTML to describe these two projects, but if you will
-continue developing sites, the creation of a backoffice where you can add easily new projects would be a good idea.
+have made one or two projects you could be thinking on just writing HTML to present these two projects to the world, but
+if you will continue developing sites, the creation of a backoffice where you can add easily new projects would be a
+good idea.
 
 Said that, we can model our backoffice with an Entity Project where we can set:
 * Project's title (type: string; nullable=false)
@@ -97,18 +111,20 @@ Said that, we can model our backoffice with an Entity Project where we can set:
 Before start coding go to the first branch:
 
 ``` bash
-    git branch -b 0-start origin/0-start
+    git checkout -b 0-start origin/0-start
 ```
 
-On this branch we have:
+On this branch we have done some initial tasks like:
 
 * Removed the default AcmeDemoBundle
 * Prepared routing
 * Added bootstrap.css for templating styles
-* Created the basic entity Project
+* Created the basic Project Entity
 * Created a list projects action on the Controller
 
 
+Follow the online Symfony documentation along with this tutorial. In each feature I will point to the related symfony
+component.
 
 ### 1. Basic form
 
@@ -120,6 +136,8 @@ Move to the initial branch to start with this feature:
     git checkout -b 0-start origin/0-start
 ```
 
+**Symfony doc**: http://symfony.com/doc/current/book/forms.html
+
 Before starting with forms we need to create the database and its tables physically so execute this on a terminal:
 
 ``` bash
@@ -127,16 +145,17 @@ Before starting with forms we need to create the database and its tables physica
     app/console doctrine:schema:update --force
 ```
 
-If you go to our project's url: http://basic-forms-tutorial.localhost/app_dev.php you'll find out that there is no
+If you go to our project's url: http://basic-forms-tutorial.localhost/app_dev.php you will find out that there is no
 projects stored yet. We do not have fixtures and we do not intend to create them so we are
 going to create a new project feature, a basic form.
+
 
 **Form rendering**
 
 1.  Create a new file in `src/Ivelazquez/AdminBundle/Form/Type/ProjectFormType.php`. This file will contain the form
     structure.
 2.  Add a new action to `ProjectController.php` called **newAction** where the form will be created and sent to the view
-    to be rendered. This new action has the route `/new`
+    to be rendered. This new action has the route `/new` and the name `admin_project_new`.
 3.  Create a new template for this form in `src/Ivelazquez/AdminBundle/Resources/views/Project/new.html.twig` and add:
 
     ``` jinja
@@ -145,17 +164,17 @@ going to create a new project feature, a basic form.
             <input type="submit" class="btn" value="Create">
         </form>
     ```
-4.  Add to the layout's sidemenu a link to our new action
+4.  Add to layout's sidemenu a link to our new action
 5.  After that you will be able to see the form by clicking on the link created above.
 
 **Form processing**
 
-We have draw a form but right now it is not processing any data. The processing consists on binding the date, validate
-it and persists the new entity
+We have drawn a form but right now it is not processing any data. The processing consists on binding the date, validate
+it and persists/flush the new entity to the database.
 
-1.  Extend the newAction. Insert inside this function an if sentence for processing POST requests.
+1.  Extend the newAction. Insert inside this function an if sentence clause for processing POST requests.
 2.  Inside this sentence we are going to delegate all the form processing to a new class called ProjectFormHandler
-    created in `/src/Ivelazquez/AdminBundle/Form/Handler/ProjectFormHandler.php`. Let's create it.
+    living in `/src/Ivelazquez/AdminBundle/Form/Handler/ProjectFormHandler.php`. Let's create it.
 3.  Such class will be made up of a **constructor** receiving:
     -   The created form
     -   The received request
@@ -183,9 +202,11 @@ Move to this branch to continue with this feature:
     git checkout -b 1-basic-form origin/1-basic-form
 ```
 
+**Symfony doc**: http://symfony.com/doc/current/book/forms.html
+
 Now we would like to update information on a particular project.
 
-1.  Create an **editAction** in our `ProjectController.php`. The route is `/edit/{id}`.
+1.  Create an **editAction** in our `ProjectController.php`. The route is `/edit/{id}` with name `admin_projetc_edit`.
 2.  This action is almost identical to our first newAction so it creates a form and processes it if received a POST
     request. But, before create the form, we need to look up the database for the project we want to update.
 3.  If we find this project, we need to prepopulate the form type when it is created with the found project's data.
@@ -222,6 +243,9 @@ Move to this branch to continue with this feature:
 ``` bash
     git checkout -b 2-edit-form origin/2-edit-form
 ```
+
+**Symfony doc**: http://symfony.com/doc/current/book/forms.html#built-in-field-types
+                 http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand
 
 At this point, we have a functional creation and edition form. It is time to extend our Project Entity and therefore,
 its form.
@@ -284,6 +308,8 @@ Move to this branch to continue with this feature:
     git checkout -b 3-new-widgets origin/3-new-widgets
 ```
 
+**Symfony doc**: http://symfony.com/doc/current/book/validation.html
+
 Right now, this form validates according to the Symfony default Type Constraints but we want to enhance the security of
 our data input adding some more Constraints and security to this form.
 
@@ -320,6 +346,8 @@ Move to this branch to continue with this feature:
 ``` bash
     git checkout -b 4-validation origin/4-validation
 ```
+
+**Symfony doc**: http://symfony.com/doc/current/book/forms.html#form-theming
 
 Let's pimp the form layout. As you can see we still have the default lists of errors when a field is not valid. We
 rather red alerts for example. So we are using Twitter Bootstrap we would like to get a tooltip when hovering
