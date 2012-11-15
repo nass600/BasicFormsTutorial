@@ -244,6 +244,9 @@ Move to this branch to continue with this feature:
     git checkout -b 2-edit-form origin/2-edit-form
 ```
 
+**Symfony doc**: http://symfony.com/doc/current/book/forms.html#built-in-field-types
+                 http://symfony.com/doc/current/book/forms.html#rendering-each-field-by-hand
+
 At this point, we have a functional creation and edition form. It is time to extend our Project Entity and therefore,
 its form.
 
@@ -305,6 +308,8 @@ Move to this branch to continue with this feature:
     git checkout -b 3-new-widgets origin/3-new-widgets
 ```
 
+**Symfony doc**: http://symfony.com/doc/current/book/validation.html
+
 Right now, this form validates according to the Symfony default Type Constraints but we want to enhance the security of
 our data input adding some more Constraints and security to this form.
 
@@ -341,6 +346,8 @@ Move to this branch to continue with this feature:
 ``` bash
     git checkout -b 4-validation origin/4-validation
 ```
+
+**Symfony doc**: http://symfony.com/doc/current/book/forms.html#form-theming
 
 Let's pimp the form layout. As you can see we still have the default lists of errors when a field is not valid. We
 rather red alerts for example. So we are using Twitter Bootstrap we would like to get a tooltip when hovering
